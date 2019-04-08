@@ -18,10 +18,17 @@ namespace LawnJournalApi.Services
             _lawns = database.GetCollection<Lawn>("Lawns");
         }
 
-        public async Task<List<Lawn>> GetAsync()
+        public async Task<List<Lawn>> GetAllAsync()
         {
-            var task = await _lawns.FindAsync(l => true);
-            return await task.ToListAsync();
+            var tasks = await _lawns.FindAsync(l => true);
+            return await tasks.ToListAsync();
+        }
+
+        public async Task<Lawn> GetAsync(string id)
+        {
+            var task = await _lawns.FindAsync(l => l.Id == id);
+
+            return await task.FirstOrDefaultAsync();
         }
     }
 }

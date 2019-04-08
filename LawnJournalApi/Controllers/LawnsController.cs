@@ -18,7 +18,7 @@ namespace LawnJournalApi.Controllers
             _lawnService = lawnService;
         }
 
-        [HttpGet("/ping")]
+        [HttpGet("ping")]
         public IActionResult Ping()
         {
             return Ok("I'm alive!"); 
@@ -27,9 +27,23 @@ namespace LawnJournalApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var lawns = await _lawnService.GetAsync();
+            var lawns = await _lawnService.GetAllAsync();
             var dtos = lawns.Select(l => new LawnDto(l)).ToList();
             return Ok(lawns);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(string id)
+        {
+            var lawn = await _lawnService.GetAsync(id);
+
+            if(lawn == null)
+            {
+                return NotFound();
+            }
+
+            var dto = new LawnDto(lawn);
+            return Ok(lawn);
         }
     }
 }
