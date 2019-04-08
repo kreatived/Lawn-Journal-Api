@@ -63,7 +63,7 @@ namespace LawnJournalApi
             });
 
             app.UseAuthentication();
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
