@@ -18,6 +18,12 @@ namespace LawnJournalApi.Controllers
             _lawnService = lawnService;
         }
 
+        [HttpGet("/ping")]
+        public IActionResult Ping()
+        {
+            return Ok("I'm alive!"); 
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
