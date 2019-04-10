@@ -10,8 +10,8 @@ namespace LawnJournalApi.Interfaces
         Task<List<Lawn>> GetAllAsync();
         Task<Lawn> GetAsync(string id);
         Task<Lawn> Create(LawnDto lawn);
-        void Update(LawnDto lawn);
-        void Delete(string id);
+        Task Update(LawnDto lawn);
+        Task Delete(string id);
 
     }
 }
