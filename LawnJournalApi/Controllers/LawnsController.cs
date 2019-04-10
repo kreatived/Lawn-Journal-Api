@@ -18,21 +18,15 @@ namespace LawnJournalApi.Controllers
             _lawnService = lawnService;
         }
 
-        [HttpGet("ping")]
-        public IActionResult Ping()
-        {
-            return Ok("I'm alive!"); 
-        }
-
-        [HttpGet]
+        [HttpGet(Name = "GetLawns")]
         public async Task<IActionResult> Get()
         {
             var lawns = await _lawnService.GetAllAsync();
             var dtos = lawns.Select(l => new LawnDto(l)).ToList();
-            return Ok(lawns);
+            return Ok(dtos);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetLawn")]
         public async Task<IActionResult> Get(string id)
         {
             var lawn = await _lawnService.GetAsync(id);
@@ -43,7 +37,49 @@ namespace LawnJournalApi.Controllers
             }
 
             var dto = new LawnDto(lawn);
-            return Ok(lawn);
+            return Ok(dto);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(LawnDto newLawn)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var lawn = await _lawnService.Create(newLawn);
+
+            return CreatedAtAction(nameof(Get), new {id = lawn.Id}, new LawnDto(lawn));
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(string id, LawnDto updatedLawn)
+        {
+            var lawn = await _lawnService.GetAsync(id);
+            if(lawn == null)
+            {
+                return NotFound();
+            }
+
+            await _lawnService.Update(updatedLawn);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var lawn = await _lawnService.GetAsync(id);
+            if(lawn == null)
+            {
+                return NotFound();
+            }
+
+            await _lawnService.Delete(id);
+
+            return NoContent();
+        }
+
     }
 }

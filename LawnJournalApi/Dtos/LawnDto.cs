@@ -3,15 +3,20 @@ using LawnJournalApi.Models;
 
 namespace LawnJournalApi.Dtos
 {
-    internal class LawnDto
+    public class LawnDto
     {
-        public string Id { get; }
+        public string Id { get; set; }
         [Required]
         [StringLength(200)]
-        public string Name { get; }
+        public string Name { get; set; }
         [Required]
-        public string Description { get; }
-        public string ImageUrl { get; }
+        public string Description { get; set; }
+        public string ImageUrl { get; set; }
+
+        public LawnDto()
+        {
+
+        }
 
         public LawnDto(Lawn lawn)
         {
