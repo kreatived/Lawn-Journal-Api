@@ -1,9 +1,9 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace LawnJournalApi.Models
+namespace LawnJournalApi.Models.Products
 {
-    public class Lawn: ModelBase
+    public abstract class Product: ModelBase
     {
         [BsonElement("Name")]
         [BsonRequired]
@@ -13,5 +13,7 @@ namespace LawnJournalApi.Models
         public string Description { get; set; }
         [BsonElement("ImageUrl")]
         public string ImageUrl { get; set; }
+        [BsonElement("ProductType")]
+        public string ProductType { get; set; }
     }
 }
