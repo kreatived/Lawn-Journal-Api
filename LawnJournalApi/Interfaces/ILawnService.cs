@@ -1,17 +1,17 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LawnJournalApi.Dtos;
+using LawnJournalApi.Dtos.Lawns;
 using LawnJournalApi.Models;
 
 namespace LawnJournalApi.Interfaces
 {
     public interface ILawnService
     {
-        Task<List<Lawn>> GetAllAsync();
-        Task<Lawn> GetAsync(string id);
-        Task<Lawn> Create(LawnDto lawn);
-        Task Update(LawnDto lawn);
-        Task Delete(string id);
+        Task<List<Models.Lawn>> GetAllAsync();
+        Task<Models.Lawn> GetAsync(string lawnId);
+        Task<Models.Lawn> Create(LawnForCreate newLawn);
+        Task Update(string lawnId, LawnForUpdate updatedLawn);
+        Task Delete(string lawnId);
 
     }
 }

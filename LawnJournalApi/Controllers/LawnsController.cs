@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LawnJournalApi.Dtos;
+using LawnJournalApi.Dtos.Lawns;
 using LawnJournalApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,7 +23,7 @@ namespace LawnJournalApi.Controllers
         public async Task<IActionResult> Get()
         {
             var lawns = await _lawnService.GetAllAsync();
-            var dtos = lawns.Select(l => new LawnDto(l)).ToList();
+            var dtos = lawns.Select(l => new Lawn(l)).ToList();
             return Ok(dtos);
         }
 
@@ -36,12 +37,12 @@ namespace LawnJournalApi.Controllers
                 return NotFound();
             }
 
-            var dto = new LawnDto(lawn);
+            var dto = new Lawn(lawn);
             return Ok(dto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(LawnDto newLawn)
+        public async Task<IActionResult> Create(LawnForCreate newLawn)
         {
             if(!ModelState.IsValid)
             {
@@ -50,11 +51,11 @@ namespace LawnJournalApi.Controllers
 
             var lawn = await _lawnService.Create(newLawn);
 
-            return CreatedAtAction(nameof(Get), new {id = lawn.Id}, new LawnDto(lawn));
+            return CreatedAtAction(nameof(Get), new {id = lawn.Id}, new Lawn(lawn));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(string id, LawnDto updatedLawn)
+        public async Task<IActionResult> Update(string id, LawnForUpdate updatedLawn)
         {
             var lawn = await _lawnService.GetAsync(id);
             if(lawn == null)
@@ -62,7 +63,7 @@ namespace LawnJournalApi.Controllers
                 return NotFound();
             }
 
-            await _lawnService.Update(updatedLawn);
+            await _lawnService.Update(id, updatedLawn);
 
             return Ok();
         }

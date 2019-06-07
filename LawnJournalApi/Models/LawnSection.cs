@@ -1,10 +1,9 @@
-using System.Collections.Generic;
-using MongoDB.Bson;
+using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace LawnJournalApi.Models
 {
-    public class Lawn: ModelBase
+    public class LawnSection: ModelBase
     {
         [BsonElement("Name")]
         [BsonRequired]
@@ -14,11 +13,5 @@ namespace LawnJournalApi.Models
         public string Description { get; set; }
         [BsonElement("ImageUrl")]
         public string ImageUrl { get; set; }
-        public List<LawnSection> Sections { get; set; }
-
-        public Lawn()
-        {
-            Sections = new List<LawnSection>();
-        }
     }
 }
