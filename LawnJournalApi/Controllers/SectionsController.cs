@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using LawnJournalApi.Dtos;
 using LawnJournalApi.Dtos.Lawns;
 using LawnJournalApi.Dtos.LawnSections;
+using LawnJournalApi.Exceptions;
 using LawnJournalApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,23 +24,34 @@ namespace LawnJournalApi.Controllers
         [HttpGet(Name = "GetLawnSections")]
         public async Task<IActionResult> Get(string lawnId)
         {
-            var sections = await _lawnSectionService.GetAllAsync(lawnId);
-            var dtos = sections.Select(s => new LawnSection(s)).ToList();
-            return Ok(dtos);
+            try {
+                var sections = await _lawnSectionService.GetAllAsync(lawnId);
+                var dtos = sections.Select(s => new LawnSection(s)).ToList();
+                return Ok(dtos);
+            }
+            catch(LawnNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet("{sectionId}", Name = "GetLawn")]
         public async Task<IActionResult> Get(string lawnId, string sectionId)
         {
-            var section = await _lawnSectionService.GetAsync(lawnId, sectionId);
-
-            if(section == null)
+            try {
+                var section = await _lawnSectionService.GetAsync(lawnId, sectionId);
+                var dto = new LawnSection(section);
+                return Ok(dto);
+            }
+            catch(LawnNotFoundException)
+            {
+                return BadRequest($"No lawn found with id {lawnId}");
+            }
+            catch(LawnSectionNotFoundException)
             {
                 return NotFound();
             }
-
-            var dto = new LawnSection(section);
-            return Ok(dto);
+            
         }
 
         [HttpPost]
@@ -58,30 +70,38 @@ namespace LawnJournalApi.Controllers
         [HttpPut("{sectionId}")]
         public async Task<IActionResult> Update(string lawnId, string sectionId, LawnSectionForUpdate updatedLawnSection)
         {
-            var section = await _lawnSectionService.GetAsync(lawnId, sectionId);
-            if(section == null)
+            try {
+                var section = await _lawnSectionService.GetAsync(lawnId, sectionId);
+                await _lawnSectionService.Update(lawnId, sectionId, updatedLawnSection);
+                return Ok();
+            }
+            catch(LawnNotFoundException)
+            {
+                return BadRequest($"No lawn found with id {lawnId}");
+            }
+            catch(LawnSectionNotFoundException)
             {
                 return NotFound();
             }
-
-            await _lawnSectionService.Update(lawnId, sectionId, updatedLawnSection);
-
-            return Ok();
+            
         }
 
         [HttpDelete("{sectionId}")]
         public async Task<IActionResult> Delete(string lawnId, string sectionId)
         {
-            var section = await _lawnSectionService.GetAsync(lawnId, sectionId);
-            if(section == null)
+            try{
+                var section = await _lawnSectionService.GetAsync(lawnId, sectionId);
+                await _lawnSectionService.Delete(lawnId, sectionId);
+                return NoContent();
+            }
+            catch(LawnNotFoundException)
+            {
+                return BadRequest($"No lawn found with id {lawnId}");
+            }
+            catch(LawnSectionNotFoundException)
             {
                 return NotFound();
             }
-
-            await _lawnSectionService.Delete(lawnId, sectionId);
-
-            return NoContent();
         }
-
     }
 }

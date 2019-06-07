@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LawnJournalApi.Dtos;
 using LawnJournalApi.Dtos.Lawns;
+using LawnJournalApi.Exceptions;
 using LawnJournalApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,15 +31,15 @@ namespace LawnJournalApi.Controllers
         [HttpGet("{id}", Name = "GetLawn")]
         public async Task<IActionResult> Get(string id)
         {
-            var lawn = await _lawnService.GetAsync(id);
-
-            if(lawn == null)
+            try {
+                var lawn = await _lawnService.GetAsync(id);
+                var dto = new Lawn(lawn);
+                return Ok(dto);
+            } 
+            catch(LawnNotFoundException) 
             {
                 return NotFound();
             }
-
-            var dto = new Lawn(lawn);
-            return Ok(dto);
         }
 
         [HttpPost]
@@ -57,29 +58,29 @@ namespace LawnJournalApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, LawnForUpdate updatedLawn)
         {
-            var lawn = await _lawnService.GetAsync(id);
-            if(lawn == null)
+            try {
+                var lawn = await _lawnService.GetAsync(id);
+                await _lawnService.Update(id, updatedLawn);
+                return Ok();
+            }
+            catch(LawnNotFoundException)
             {
                 return NotFound();
             }
-
-            await _lawnService.Update(id, updatedLawn);
-
-            return Ok();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var lawn = await _lawnService.GetAsync(id);
-            if(lawn == null)
+            try {
+                var lawn = await _lawnService.GetAsync(id);
+                await _lawnService.Delete(id);
+                return NoContent();
+            }
+            catch(LawnNotFoundException)
             {
                 return NotFound();
             }
-
-            await _lawnService.Delete(id);
-
-            return NoContent();
         }
 
     }
