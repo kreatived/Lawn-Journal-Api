@@ -35,7 +35,7 @@ namespace LawnJournalApi.Controllers
             }
         }
 
-        [HttpGet("{sectionId}", Name = "GetLawn")]
+        [HttpGet("{sectionId}", Name = "GetLawnSection")]
         public async Task<IActionResult> Get(string lawnId, string sectionId)
         {
             try {

@@ -12,6 +12,7 @@ namespace LawnJournalApi.Dtos.LawnSections
         [Required]
         public string Description { get; }
         public string ImageUrl { get; }
+        public int SquareFeet { get; }
 
         public LawnSection(Models.LawnSection lawnSection)
         {
@@ -19,6 +20,8 @@ namespace LawnJournalApi.Dtos.LawnSections
             Name = lawnSection.Name;
             Description = lawnSection.Description;
             ImageUrl = lawnSection.ImageUrl;
+            SquareFeet = lawnSection.SqareFeet;
+            
         }
     }
 }

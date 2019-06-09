@@ -11,5 +11,6 @@ namespace LawnJournalApi.Dtos.LawnSections
         [Required]
         public string Description { get; set; }
         public string ImageUrl { get; set; }
+        public int SquareFeet { get; set; }
     }
 }

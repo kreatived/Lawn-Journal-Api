@@ -13,5 +13,7 @@ namespace LawnJournalApi.Models
         public string Description { get; set; }
         [BsonElement("ImageUrl")]
         public string ImageUrl { get; set; }
+        [BsonElement("SquareFeet")]
+        public int SqareFeet { get; set; }
     }
 }
