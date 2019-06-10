@@ -44,5 +44,12 @@ namespace LawnJournalApi.Models.Products
         [BsonElement("SeasonsOfUse")]
         [BsonRequired]
         public List<string> SeasonsOfUse { get; set; }
+
+        public Fertilizer()
+        {
+            CompatibleGrassTypes = new List<string>();
+            Features = new List<string>();
+            SeasonsOfUse = new List<string>();
+        }
     }
 }

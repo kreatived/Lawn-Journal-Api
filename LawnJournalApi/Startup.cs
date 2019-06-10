@@ -31,6 +31,7 @@ namespace LawnJournalApi
         {
             services.AddScoped<ILawnService, LawnService>();
             services.AddScoped<ILawnSectionService, LawnSectionService>();
+            services.AddScoped<IFertilizerService, FertilizerService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             string domain = $"https://{Configuration["Auth0:Domain"]}/";

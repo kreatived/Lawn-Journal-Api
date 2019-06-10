@@ -28,11 +28,11 @@ namespace LawnJournalApi.Controllers
             return Ok(dtos);
         }
 
-        [HttpGet("{id}", Name = "GetLawn")]
-        public async Task<IActionResult> Get(string id)
+        [HttpGet("{lawnId}", Name = "GetLawn")]
+        public async Task<IActionResult> Get(string lawnId)
         {
             try {
-                var lawn = await _lawnService.GetAsync(id);
+                var lawn = await _lawnService.GetAsync(lawnId);
                 var dto = new Lawn(lawn);
                 return Ok(dto);
             } 
@@ -52,15 +52,15 @@ namespace LawnJournalApi.Controllers
 
             var lawn = await _lawnService.Create(newLawn);
 
-            return CreatedAtAction(nameof(Get), new {id = lawn.Id}, new Lawn(lawn));
+            return CreatedAtAction(nameof(Get), new {lawnId = lawn.Id}, new Lawn(lawn));
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(string id, LawnForUpdate updatedLawn)
+        [HttpPut("{lawnId}")]
+        public async Task<IActionResult> Update(string lawnId, LawnForUpdate updatedLawn)
         {
             try {
-                var lawn = await _lawnService.GetAsync(id);
-                await _lawnService.Update(id, updatedLawn);
+                var lawn = await _lawnService.GetAsync(lawnId);
+                await _lawnService.Update(lawnId, updatedLawn);
                 return Ok();
             }
             catch(LawnNotFoundException)
@@ -69,12 +69,12 @@ namespace LawnJournalApi.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string id)
+        [HttpDelete("{lawnId}")]
+        public async Task<IActionResult> Delete(string lawnId)
         {
             try {
-                var lawn = await _lawnService.GetAsync(id);
-                await _lawnService.Delete(id);
+                var lawn = await _lawnService.GetAsync(lawnId);
+                await _lawnService.Delete(lawnId);
                 return NoContent();
             }
             catch(LawnNotFoundException)

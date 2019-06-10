@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using LawnJournalApi.Dtos;
 using LawnJournalApi.Dtos.Lawns;
+using LawnJournalApi.Exceptions;
 using LawnJournalApi.Interfaces;
 using LawnJournalApi.Models;
 using Microsoft.Extensions.Configuration;
@@ -39,7 +40,12 @@ namespace LawnJournalApi.Services
 
         public async Task Delete(string id)
         {
-            await _lawns.DeleteOneAsync(l => l.Id == id);
+            var result = await _lawns.DeleteOneAsync(l => l.Id == id);
+
+            if(result.DeletedCount == 0)
+            {
+                throw new LawnNotFoundException(id);
+            }
         }
 
         public async Task<List<Models.Lawn>> GetAllAsync()
@@ -52,7 +58,13 @@ namespace LawnJournalApi.Services
         {
             var task = await _lawns.FindAsync(l => l.Id == id);
 
-            return await task.FirstOrDefaultAsync();
+            var lawn = await task.FirstOrDefaultAsync();
+            if(lawn == null)
+            {
+                throw new LawnNotFoundException(id);
+            }
+
+            return lawn;
         }
 
         public async Task Update(string lawnId, LawnForUpdate updatedLawn)
@@ -66,7 +78,12 @@ namespace LawnJournalApi.Services
                 UpdatedDate = DateTime.UtcNow
             };
 
-            await _lawns.ReplaceOneAsync(l => l.Id == lawnId, lawn);
+            var result = await _lawns.ReplaceOneAsync(l => l.Id == lawnId, lawn);
+
+            if(result.MatchedCount == 0)
+            {
+                throw new LawnNotFoundException(lawnId);
+            }
         }
     }
 }
