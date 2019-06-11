@@ -54,29 +54,22 @@ namespace LawnJournalApi.Services
             return await tasks.ToListAsync();
         }
 
-        public async Task<Models.Lawn> GetAsync(string id)
+        public async Task<Models.Lawn> GetAsync(string lawnId)
         {
-            var task = await _lawns.FindAsync(l => l.Id == id);
-
-            var lawn = await task.FirstOrDefaultAsync();
-            if(lawn == null)
-            {
-                throw new LawnNotFoundException(id);
-            }
+            var lawn = await GetLawnAsync(lawnId);
 
             return lawn;
         }
 
         public async Task Update(string lawnId, LawnForUpdate updatedLawn)
         {
-            var lawn = new Models.Lawn
-            {
-                Id = lawnId,
-                Name = updatedLawn.Name,
-                Description = updatedLawn.Description,
-                ImageUrl = updatedLawn.ImageUrl,
-                UpdatedDate = DateTime.UtcNow
-            };
+            var lawn = await GetLawnAsync(lawnId);
+
+            lawn.Id = lawnId;
+            lawn.Name = updatedLawn.Name;
+            lawn.Description = updatedLawn.Description;
+            lawn.ImageUrl = updatedLawn.ImageUrl;
+            lawn.UpdatedDate = DateTime.UtcNow;
 
             var result = await _lawns.ReplaceOneAsync(l => l.Id == lawnId, lawn);
 
@@ -84,6 +77,18 @@ namespace LawnJournalApi.Services
             {
                 throw new LawnNotFoundException(lawnId);
             }
+        }
+
+        private async Task<Models.Lawn> GetLawnAsync(string lawnId)
+        {
+            var task = await _lawns.FindAsync(l => l.Id == lawnId);
+            var lawn = await task.FirstOrDefaultAsync();
+            if(lawn == null)
+            {
+                throw new LawnNotFoundException(lawnId);
+            }
+
+            return lawn;
         }
     }
 }

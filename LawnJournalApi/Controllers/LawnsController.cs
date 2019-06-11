@@ -59,7 +59,6 @@ namespace LawnJournalApi.Controllers
         public async Task<IActionResult> Update(string lawnId, LawnForUpdate updatedLawn)
         {
             try {
-                var lawn = await _lawnService.GetAsync(lawnId);
                 await _lawnService.Update(lawnId, updatedLawn);
                 return Ok();
             }
@@ -73,7 +72,6 @@ namespace LawnJournalApi.Controllers
         public async Task<IActionResult> Delete(string lawnId)
         {
             try {
-                var lawn = await _lawnService.GetAsync(lawnId);
                 await _lawnService.Delete(lawnId);
                 return NoContent();
             }

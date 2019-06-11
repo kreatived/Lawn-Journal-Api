@@ -20,7 +20,7 @@ namespace LawnJournalApi.Dtos.LawnSections
             Name = lawnSection.Name;
             Description = lawnSection.Description;
             ImageUrl = lawnSection.ImageUrl;
-            SquareFeet = lawnSection.SqareFeet;
+            SquareFeet = lawnSection.SquareFeet;
             
         }
     }

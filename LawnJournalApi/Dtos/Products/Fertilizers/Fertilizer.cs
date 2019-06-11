@@ -6,9 +6,13 @@ namespace LawnJournalApi.Dtos.Products.Fertilizers
     public class Fertilizer: Product
     {
         [Required]
-        public int CoverageAreaSqFt { get; }
+        public int CoverageArea { get; }
         [Required]
-        public int PackageSizeLb { get; }
+        public string CoverageAreaUnitOfMeasure { get; }
+        [Required]
+        public int PackageSize { get; }
+        [Required]
+        public string PackageSizeUnitOfMeasure { get; }
         [Required]
         public List<string> CompatibleGrassTypes { get; }
         [Required]
@@ -33,8 +37,10 @@ namespace LawnJournalApi.Dtos.Products.Fertilizers
 
         public Fertilizer(Models.Products.Fertilizer fertilizer): base(fertilizer.Id, fertilizer.Name, fertilizer.Description, fertilizer.ImageUrl, fertilizer.ProductType)
         {
-            CoverageAreaSqFt = fertilizer.CoverageAreaSqFt;
-            PackageSizeLb = fertilizer.PackageSizeLb;
+            CoverageArea = fertilizer.CoverageArea;
+            CoverageAreaUnitOfMeasure = fertilizer.CoverageAreaUnitOfMeasure;
+            PackageSize = fertilizer.PackageSize;
+            PackageSizeUnitOfMeasure = fertilizer.PackageSizeUnitOfMeasure;
             CompatibleGrassTypes = fertilizer.CompatibleGrassTypes;
             ConditionOfLawn = fertilizer.ConditionOfLawn;
             Features = fertilizer.Features;

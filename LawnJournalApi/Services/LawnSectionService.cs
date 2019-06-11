@@ -34,7 +34,7 @@ namespace LawnJournalApi.Services
                 Name = newLawnSection.Name,
                 Description = newLawnSection.Description,
                 ImageUrl = newLawnSection.ImageUrl,
-                SqareFeet = newLawnSection.SquareFeet,
+                SquareFeet = newLawnSection.SquareFeet,
                 CreatedDate = DateTime.UtcNow,
                 UpdatedDate = DateTime.UtcNow
             };
@@ -77,7 +77,7 @@ namespace LawnJournalApi.Services
             section.Name = updatedLawnSection.Name;
             section.Description = updatedLawnSection.Description;
             section.ImageUrl = updatedLawnSection.ImageUrl;
-            section.SqareFeet = updatedLawnSection.SquareFeet;
+            section.SquareFeet = updatedLawnSection.SquareFeet;
             section.UpdatedDate = DateTime.UtcNow;
 
             await _lawns.ReplaceOneAsync(l => l.Id == lawnId, lawn);

@@ -6,12 +6,18 @@ namespace LawnJournalApi.Models.Products
 {
     public class Fertilizer: Product
     {
-        [BsonElement("CoverageAreaSqFt")]
+        [BsonElement("CoverageArea")]
         [BsonRequired]
-        public int CoverageAreaSqFt { get; set; }
-        [BsonElement("PackageSizeLb")]
+        public int CoverageArea { get; set; }
+        [BsonElement("CoverageAreaUnitOfMeasure")]
         [BsonRequired]
-        public int PackageSizeLb { get; set; }
+        public string CoverageAreaUnitOfMeasure { get; set; }
+        [BsonElement("PackageSize")]
+        [BsonRequired]
+        public int PackageSize { get; set; }
+        [BsonElement("PackageSizeUnitOfMeasure")]
+        [BsonRequired]
+        public string PackageSizeUnitOfMeasure { get; set; }
         [BsonElement("CompatibleGrassTypes")]
         [BsonRequired]
         public List<string> CompatibleGrassTypes { get; set; }

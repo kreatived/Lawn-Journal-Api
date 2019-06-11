@@ -13,9 +13,13 @@ namespace LawnJournalApi.Dtos.Products.Fertilizers
         [Required]
         public string ProductType { get; }
         [Required]
-        public int CoverageAreaSqFt { get; }
+        public int CoverageArea { get; }
         [Required]
-        public int PackageSizeLb { get; }
+        public string CoverageAreaUnitOfMeasure { get; }
+        [Required]
+        public int PackageSize { get; }
+        [Required]
+        public string PackageSizeUnitOfMeasure { get; }
         [Required]
         public List<string> CompatibleGrassTypes { get; }
         [Required]

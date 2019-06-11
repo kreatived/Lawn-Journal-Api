@@ -1,3 +1,4 @@
+using System;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -9,8 +10,21 @@ namespace LawnJournalApi.Models
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonRequired]
         public string ProductId { get; set; }
-        [BsonElement("AmountLb")]
+        [BsonElement("LawnId")]
+        [BsonRepresentation(BsonType.ObjectId)]
         [BsonRequired]
-        public int AmountLb { get; set; }
+        public string LawnId { get; set; }
+        [BsonElement("LawnSectionId")]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string LawnSectionId { get; set; }
+        [BsonElement("Amount")]
+        [BsonRequired]
+        public decimal Amount { get; set; }
+        [BsonElement("UnitOfMeasure")]
+        [BsonRequired]
+        public string UnitOfMeasure { get; set; }
+        [BsonElement("ApplicationDate")]
+        [BsonRequired]
+        public DateTime ApplicationDate { get; set; }
     }
 }
