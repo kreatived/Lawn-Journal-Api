@@ -24,6 +24,8 @@
             "error",
             { "devDependencies": true }
         ],
+        "import/prefer-default-export": "off",
+        "import/no-underscore-dangle": "off",
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "linebreak-style": "off",
         "global-require": "off",
