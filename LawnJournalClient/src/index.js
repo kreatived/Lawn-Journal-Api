@@ -1,14 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "index.scss";
-
-let HelloWorld = () => {  
-    return (
-        <h1>Hello there World!</h1>
-    )
-}
+import { Main } from "./main";
 
 ReactDOM.render(  
-    <HelloWorld/>,  
+    <Main/>,  
     document.getElementById("root")
 );

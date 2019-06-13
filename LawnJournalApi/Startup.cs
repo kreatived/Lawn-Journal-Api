@@ -32,6 +32,8 @@ namespace LawnJournalApi
             services.AddScoped<ILawnService, LawnService>();
             services.AddScoped<ILawnSectionService, LawnSectionService>();
             services.AddScoped<IFertilizerService, FertilizerService>();
+
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             string domain = $"https://{Configuration["Auth0:Domain"]}/";
@@ -64,6 +66,7 @@ namespace LawnJournalApi
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
+            app.UseCors(builder => builder.WithOrigins("http://localhost:8080"));
             app.UseAuthentication();
             //app.UseHttpsRedirection();
             app.UseMvc();
