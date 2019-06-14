@@ -1,13 +1,12 @@
-// old
-// const path = require('path');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
-// new
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+const Dotenv = require('dotenv-webpack');
 
-module.exports = {  
-    entry: ['babel-polyfill', path.join(__dirname,'src','index.js')],  
-    output: {    
+module.exports = () => {  
+
+    return {
+        entry: ['babel-polyfill', path.join(__dirname,'src','index.js')],  
+        output: {    
         path: path.join(__dirname,'build'),    
         filename: 'index.bundle.js'  },  
         mode: process.env.NODE_ENV || 'development',  
@@ -47,6 +46,8 @@ module.exports = {
         plugins: [    
             new HtmlWebpackPlugin({      
                 template: path.join(__dirname,'src','index.html')    
-            })  
+            }),
+            new Dotenv()
         ]
-    };
+    }
+};

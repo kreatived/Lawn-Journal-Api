@@ -6,7 +6,7 @@ export const Lawns = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios('http://localhost:5000/api/lawns');
+            const result = await axios(process.env.API_URL + '/lawns');
 
             setLawns(result.data);
         };

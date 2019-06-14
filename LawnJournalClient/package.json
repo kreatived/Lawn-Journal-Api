@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "webpack": "babel-node ./node_modules/webpack/bin/webpack",
-    "start": "babel-node ./node_modules/webpack-dev-server/bin/webpack-dev-server --open"
+    "start": "babel-node ./node_modules/webpack-dev-server/bin/webpack-dev-server --open",
+    "build": "babel-node ./node_modules/webpack/bin/webpack"
   },
   "keywords": [],
   "author": "Derek Jensen <jensendp@gmail.com>",
@@ -19,6 +20,8 @@
     "@babel/preset-react": "7.0.0",
     "babel-loader": "8.0.6",
     "css-loader": "3.0.0",
+    "dotenv": "^8.0.0",
+    "dotenv-webpack": "^1.7.0",
     "file-loader": "4.0.0",
     "html-webpack-plugin": "3.2.0",
     "node-sass": "4.12.0",
