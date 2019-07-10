@@ -1,9 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import axios from 'axios';
 
 export const AddSection = (props) => {
-
     const [newSection, setNewSection] = useState({name: '', description: '', squareFeet: ''});
+    const nameInput = useRef(null);
+
+    useEffect(() => {
+        nameInput.current.focus();
+    }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -35,7 +39,8 @@ export const AddSection = (props) => {
                     aria-describedby="name" 
                     placeholder="Enter Section Name" 
                     defaultValue={newSection.name}
-                    onChange={handleInputChange}/>
+                    onChange={handleInputChange}
+                    ref={nameInput}/>
             </div>
             <div className="form-group">
                 <label htmlFor="description">Description</label>

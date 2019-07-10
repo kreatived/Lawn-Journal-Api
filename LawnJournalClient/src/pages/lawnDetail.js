@@ -21,7 +21,18 @@ export const LawnDetail = ({match}) => {
         updatedLawn.sections.push(section);
         setLawn(updatedLawn);
         $('#addSectionModal').modal('toggle');
-    }
+    };
+
+    const deleteSection = async (e) => {
+        const id = e.target.id;
+        await axios.delete(process.env.API_URL + '/lawns/' + match.params.lawnId + '/sections/' + id);
+        var updatedLawn = {...lawn};
+        updatedLawn.sections = lawn.sections.filter((value, index, arr) => {
+            return value.id !== id;
+        });
+
+        setLawn(updatedLawn);
+    };
 
     return (
         <div>
@@ -47,6 +58,7 @@ export const LawnDetail = ({match}) => {
                                     <th scope="col">Name</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Square Feet</th>
+                                    <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,6 +67,7 @@ export const LawnDetail = ({match}) => {
                                         <td>{section.name}</td>
                                         <td>{section.description}</td>
                                         <td>{section.squareFeet}</td>
+                                        <td><button type="button" className="btn btn-danger" id={section.id} onClick={deleteSection}>Delete</button></td>
                                     </tr>
                                 ))}
                             </tbody>
