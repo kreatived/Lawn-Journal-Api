@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {LawnList} from '../components/LawnList/LawnList';
 
 export const Lawns = () => {
     const [lawns, setLawns] = useState([]);
@@ -16,9 +17,17 @@ export const Lawns = () => {
 
     return (
         <div>
-            <h1>Manage Your Lawns</h1>
+            <div className="jumbotron">
+                <h1 className="display-4">Manage Your Lawns</h1>
+                <p className="lead">This is where you can keep track of all your lawns along with some high-level information about them.</p>
+                <hr className="my-4"/>
+                <p>You are currently managing {lawns.length} lawns with a total of {lawns.reduce((prev, cur) => {return prev + cur.squareFeet}, 0)} sq ft.</p>
+                <a className="btn btn-primary btn-lg" href="#" role="button">Add A Lawn</a>
+            </div>
 
-            <h2>Lawn Count: {lawns.length}</h2>
+            <div className="container">
+                <LawnList lawns={lawns} />
+            </div>
         </div>
     )
 }

@@ -66,7 +66,7 @@ namespace LawnJournalApi
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            app.UseCors(builder => builder.WithOrigins("http://localhost:8080"));
+            app.UseCors(builder => builder.WithOrigins("http://localhost:8080").AllowAnyHeader().AllowAnyMethod());
             app.UseAuthentication();
             //app.UseHttpsRedirection();
             app.UseMvc();
